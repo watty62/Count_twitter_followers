@@ -1,11 +1,11 @@
-import locale
+#import locale
 import re
 from lxml import html
 import requests
 
 twitterAccounts = ['DanceAberdeen','Aberdeencc','mjs_abc','AbdnArtMuseums','AberdeenCSP','LordProvostAbdn','Acc_Jobs','NESPF','AbdnArchives','AberdeenILV','AberdeenLDP','TSAPAberdeen','Seventeen_AB','ACSEF_NESTRANS','AbLearnFest','abernet','SilverCityLibs','OCEACC']
 
-locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
+#locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
 
 def getFollower(accURL):
 	page = requests.get(accURL)
