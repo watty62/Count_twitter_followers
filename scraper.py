@@ -13,7 +13,7 @@ def getFollower(accURL):
 
 	followers = tree.xpath('//a[@data-nav="followers"]/@title')[0]
 	followers = re.match(r'^([0-9,]+)\sFollowers$', followers).group(1)
-	followers = locale.atoi(followers)
+	# followers = locale.atoi(followers)
 
 	return followers
 
