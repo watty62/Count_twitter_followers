@@ -1,15 +1,29 @@
-# This is a template for a Python scraper on Morph (https://morph.io)
-# including some code snippets below that you should find helpful
+import locale
+import re
+from lxml import html
+import requests
 
-# import scraperwiki
-# import lxml.html
-#
-# # Read in a page
- html = scraperwiki.scrape("https://twitter.com/aberdeencc")
-#
-# # Find something on the page using css selectors
-# root = lxml.html.fromstring(html)
-# root.cssselect("div[align='left']")
+twitterAccounts = ['DanceAberdeen','Aberdeencc','mjs_abc','AbdnArtMuseums','AberdeenCSP','LordProvostAbdn','Acc_Jobs','NESPF','AbdnArchives','AberdeenILV','AberdeenLDP','TSAPAberdeen','Seventeen_AB','ACSEF_NESTRANS','AbLearnFest','abernet','SilverCityLibs','OCEACC']
+
+locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
+
+def getFollower(accURL):
+	page = requests.get(accURL)
+	tree = html.fromstring(page.text)
+
+	followers = tree.xpath('//a[@data-nav="followers"]/@title')[0]
+	followers = re.match(r'^([0-9,]+)\sFollowers$', followers).group(1)
+	followers = locale.atoi(followers)
+
+	return followers
+
+for twAccount in twitterAccounts:
+	twURL = 'http://twitter.com/' + twAccount
+	print twAccount + ": " +  str(getFollower(twURL))
+	
+
+
+
 #
 # # Write out to the sqlite database using scraperwiki library
 # scraperwiki.sqlite.save(unique_keys=['name'], data={"name": "susan", "occupation": "software developer"})
