@@ -1,37 +1,63 @@
-#import locale
-import re
-from lxml import html
-import requests
+#!/usr/bin/python
 
-twitterAccounts = ['DanceAberdeen','Aberdeencc','mjs_abc','AbdnArtMuseums','AberdeenCSP','LordProvostAbdn','Acc_Jobs','NESPF','AbdnArchives','AberdeenILV','AberdeenLDP','TSAPAberdeen','Seventeen_AB','ACSEF_NESTRANS','AbLearnFest','abernet','SilverCityLibs','OCEACC']
+#this script sets up the DB, reads the CSV of existing followers, writes values to the database, and closes everything down
 
-#locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
+import sqlite3
+import csv
 
-def getFollower(accURL):
-	page = requests.get(accURL)
-	tree = html.fromstring(page.text)
+#open our CSV file of followers
+ifile  = open('followers.csv', "rb")
+reader = csv.reader(ifile)
 
-	followers = tree.xpath('//a[@data-nav="followers"]/@title')[0]
-	followers = re.match(r'^([0-9,]+)\sFollowers$', followers).group(1)
-	# followers = locale.atoi(followers)
-
-	return followers
-
-for twAccount in twitterAccounts:
-	twURL = 'http://twitter.com/' + twAccount
-	print twAccount + ": " +  str(getFollower(twURL))
-	
-
-
-
+#Open the database
+conn = sqlite3.connect('data.db')
+print "Opened database successfully";
+conn.execute("DROP TABLE IF EXISTS DATA")
 #
-# # Write out to the sqlite database using scraperwiki library
-# scraperwiki.sqlite.save(unique_keys=['name'], data={"name": "susan", "occupation": "software developer"})
-#
-# # An arbitrary query against the database
-# scraperwiki.sql.select("* from data where 'name'='peter'")
+conn.execute('''CREATE TABLE data
+       (TWITTERAC   TEXT    NOT NULL,
+       DATE           TEXT    NOT NULL,
+       FCOUNT         INT     NOT NULL
+      );''')
+print "Table created successfully";
 
-# You don't have to do things with the ScraperWiki and lxml libraries. You can use whatever libraries are installed
-# on Morph for Python (https://github.com/openaustralia/morph-docker-python/blob/master/pip_requirements.txt) and all that matters
-# is that your final data is written to an Sqlite database called data.sqlite in the current working directory which
-# has at least a table called data.
+
+rownum = 0
+for row in reader:
+    # Save header row.
+    if rownum == 0:
+        header = row
+    else:
+        colnum = 0
+        for col in row:
+        	if colnum == 0:
+                #left-hand column is the date
+        		twdate = row[colnum]
+        		
+        	else:
+                    
+                #establish the twitter ac name
+                    twitter_ac = header[colnum]
+                    #align the number of followers with the account name - and set as an integer
+        	    tw_followers = int(row[colnum])
+        	    #if there are some followers write out the date, ac, and follwers by passing to the tw_output function
+        	    if tw_followers > 0:
+
+                        query="""INSERT INTO DATA (TWITTERAC, DATE, FCOUNT) VALUES (?, ?, ?) """
+                        write_data = [twitter_ac, twdate, tw_followers]
+
+                        conn.execute(query, write_data)
+
+                        #conn.execute("INSERT INTO DATA (TWITTERAC,DATE, FCOUNT) \
+                        #VALUES (twitter_ac, twdate, tw_followers )");
+                    
+                        conn.commit()
+                        print "here"
+
+        	colnum += 1
+            
+    rownum += 1
+#close the file and the database
+ifile.close()
+conn.close()
+print "Ended"
