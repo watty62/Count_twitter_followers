@@ -6,7 +6,7 @@ import sqlite3
 import csv
 
 #open our CSV file of followers
-ifile  = open('followers.csv', "rb")
+ifile  = open('https://github.com/watty62/Count_twitter_followers/blob/master/followers.csv', "rb")
 reader = csv.reader(ifile)
 
 #Open the database
