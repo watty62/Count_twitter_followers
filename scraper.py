@@ -3,9 +3,12 @@ import re
 from lxml import html
 import requests
 import scraperwiki
+import datetime
 
 
-# this section sets up the DB, reads in existing followers, writes values to the database, and closes it down
+'''
+# Begin Section A
+# this section sets up the DB, reads in existing followers, writes values to the database
 # it needs to be uncommented to set up then commented out again before having the live scraper run
 
 
@@ -45,5 +48,54 @@ for inner_l in list_of_lists:
 
 print "Ended"
 
+# End Section A
+'''
+# Begin Section B
+# Section B is the main scraper. It checks if the date is teh 1st of the month. If so, it scrapes the number of twitter followers for active accounts in the 
+# TiwtterAccounts list, and writes these with the current date in YYYMMDD format to the 'data' table in the database
 
+twitterAccounts = ['DanceAberdeen','Aberdeencc','mjs_abc','AbdnArtMuseums','AberdeenCSP','LordProvostAbdn','Acc_Jobs','NESPF','AbdnArchives','AberdeenILV','AberdeenLDP','TSAPAberdeen','Seventeen_AB','ACSEF_NESTRANS','AbLearnFest','abernet','SilverCityLibs','OCEACC']
 
+#locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
+
+def getFollower(accURL):
+	page = requests.get(accURL)
+	tree = html.fromstring(page.text)
+	#scrape the number of followers from the bit of the page that hides that number (whcih actually appears in a mouseover!
+
+	followers = tree.xpath('//a[@data-nav="followers"]/@title')[0]
+	followers = re.match(r'^([0-9,]+)\sFollowers$', followers).group(1)
+	# followers = locale.atoi(followers)
+	return followers
+
+def get_date_str():
+	i = datetime.datetime.now()
+	str_day = str(i.day)
+	str_month = str(i.month)
+	str_year = str(i.year)
+
+	if len(str_day) < 2:
+		str_day = "0"+str_day
+
+	if len(str_month) < 2:
+		str_month = "0"+str_month
+
+	str_date = str_year + str_month + str_day
+
+	return str_date
+
+n = datetime.datetime.now()
+ 
+#check that it is the 1st of the month
+if n.day == 1:
+	#get a full date string formatted YYYYMMDD
+	twdate = get_date_str()
+	#Loop through all the active twitter accounts we want to monitor, forming full URLS and pass them to the getFollowers function
+	for twitter_ac in twitterAccounts:
+	    twURL = 'http://twitter.com/' + twAccount
+	    #test print those for now - then change to SQL writes
+	    print twdate + ": " + twitter_ac + ": " +  str(getFollower(twURL))
+	    #scraperwiki.sqlite.execute("insert into data values (?,?,?)", (twitter_ac,twdate,tw_followers)) 
+        #scraperwiki.sqlite.commit()
+else:
+	print "Not today"	
