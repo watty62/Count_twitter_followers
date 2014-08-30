@@ -98,7 +98,7 @@ if n.day == 30:
 	twdate = get_date_str()
 	#Loop through all the active twitter accounts we want to monitor, forming full URLS and pass them to the getFollowers function
 	for twitter_ac in twitterAccounts:
-	    twURL = 'http://twitter.com/' + twAccount
+	    twURL = 'http://twitter.com/' + twitter_ac
 	    #test print those for now - then change to SQL writes
 	    print twdate + ": " + twitter_ac + ": " +  str(getFollower(twURL))
 	    #scraperwiki.sqlite.execute("insert into data values (?,?,?)", (twitter_ac,twdate,tw_followers)) 
