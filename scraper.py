@@ -47,12 +47,18 @@ for inner_l in list_of_lists:
         #print "end of list"
 
 print "Ended"
-
-# End Section A
+##############################################
+#                  End Section A             #
+##############################################
 '''
-# Begin Section B
-# Section B is the main scraper. It checks if the date is teh 1st of the month. If so, it scrapes the number of twitter followers for active accounts in the 
-# TiwtterAccounts list, and writes these with the current date in YYYMMDD format to the 'data' table in the database
+##############################################
+#                  Begin Section B           #
+##############################################
+
+# Section B is the main scraper. It checks if the date is the 1st of the month. 
+# If so, it scrapes the number of twitter followers for active accounts in the 
+# TiwtterAccounts list, and writes these with the current date in YYYMMDD format 
+# to the 'data' table in the database
 
 twitterAccounts = ['DanceAberdeen','Aberdeencc','mjs_abc','AbdnArtMuseums','AberdeenCSP','LordProvostAbdn','Acc_Jobs','NESPF','AbdnArchives','AberdeenILV','AberdeenLDP','TSAPAberdeen','Seventeen_AB','ACSEF_NESTRANS','AbLearnFest','abernet','SilverCityLibs','OCEACC']
 
@@ -87,7 +93,7 @@ def get_date_str():
 n = datetime.datetime.now()
  
 #check that it is the 1st of the month
-if n.day == 1:
+if n.day == 30:
 	#get a full date string formatted YYYYMMDD
 	twdate = get_date_str()
 	#Loop through all the active twitter accounts we want to monitor, forming full URLS and pass them to the getFollowers function
@@ -96,6 +102,9 @@ if n.day == 1:
 	    #test print those for now - then change to SQL writes
 	    print twdate + ": " + twitter_ac + ": " +  str(getFollower(twURL))
 	    #scraperwiki.sqlite.execute("insert into data values (?,?,?)", (twitter_ac,twdate,tw_followers)) 
-        #scraperwiki.sqlite.commit()
+            #scraperwiki.sqlite.commit()
 else:
 	print "Not today"	
+########################################################
+# End Section B
+########################################################
