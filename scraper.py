@@ -2,10 +2,8 @@
 
 #this script sets up the DB, reads in existing followers, writes values to the database, and closes it down
 
-import sqlite3
+#import sqlite3
 import scraperwiki
-
-print scraperwiki.sqlite.show_tables() 
 
 header =['Date','ACC_Business','DanceAberdeen','Aberdeencc','mjs_abc','EventsAberdeen','AbdnArtMuseums','AberdeenCSP','LordProvostAbdn','Acc_Jobs','NESPF','AbdnArchives','AberdeenILV','AberdeenLDP','TSAPAberdeen','Seventeen_AB','ACSEF_NESTRANS','AbLearnFest','abernet','SilverCityLibs','OCEACC']
 list_of_lists = [[20090701,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0],[20090801,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], [20090901,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[20091001,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[20091101,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[20091201,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[20100101,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[20100201,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[20100301,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[20100401,0,0,52,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[20100501,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[20100601,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -14,16 +12,9 @@ list_of_lists = [[20090701,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0],[20090801,1,
 [20121101,688,395,4436,0,0,2923,234,442,98,0,219,65,22,0,0,0,0,0,0,0], [20121201,711,419,4925,0,0,3808,243,508,108,0,239,132,45,0,0,0,0,0,0,0],[20130101,717,434,5262,180,306,4732,248,544,116,0,257,167,66,1,0,0,0,0,0,0],[20130201,721,456,5761,184,0,6023,258,606,125,28,292,203,88,7,1,0,0,0,0,0],[20130301,0,476,5969,196,0,7097,264,655,129,28,307,215,116,18,215,0,0,0,0,0],[20130401,0,499,6267,204,0,8312,291,698,142,29,326,246,137,39,508,0,0,0,0,0],[20130501,0,510,6466,215,0,9478,326,728,155,31,365,265,158,46,715,0,0,0,0,0],[20130601,0,532,6745,226,0,10824,339,797,157,31,402,271,173,49,870,0,0,0,0,0],[20130701,0,537,6978,231,0,11481,351,840,170,34,432,282,177,55,981,0,0,0,0,0],[20130801,0,552,7212,241,0,12083,361,877,173,36,475,301,193,56,1015,1,0,0,0,0],[20130901,0,568,7424,251,0,12752,384,908,182,35,554,324,204,64,1037,48,0,0,0,0],[20131001,0,576,7653,263,0,13382,397,949,191,36,596,401,217,66,1074,68,0,0,0,0],[20131101,0,586,7894,276,0,14225,410,1003,194,38,630,482,236,71,1109,93,0,0,0,0],[20131201,0,590,8118,283,0,14572,432,1057,205,37,652,597,248,74,1136,105,1,0,0,0],[20140101,0,599,8344,288,0,15000,447,1112,210,38,676,664,261,74,1159,117,10,110,0,0],[20140201,0,620,8634,296,0,15700,456,1162,213,40,698,729,283,74,1192,133,53,0,0,0],[20140301,0,630,8996,310,0,16548,459,1197,220,40,716,892,304,74,1201,144,68,114,0,0], [20140401,0,641,9261,325,0,17123,463,1282,225,42,736,1205,325,72,1290,157,83,118,0,0],[20140501,0,665,9527,334,0,17975,462,1328,225,43,768,1662,342,78,1328,177,85,122,0,0],[20140601,0,675,9824,348,0,18860,465,1399,231,46,792,2125,348,80,1402,185,86,121,1,0],[20140701,0,689,10157,354,0,19429,468,1446,238,54,829,2515,354,80,1455,195,86,127,140,1],[20140801,0,696,10364,357,0,20051,470,1477,239,56,848,2534,357,84,1508,201,85,125,160,9]]
 
 #Open the database
-conn = sqlite3.connect('data.db')
-print "Opened database successfully";
-conn.execute("DROP TABLE IF EXISTS DATA")
+scraperwiki.sqlite.execute("drop table if exists data")
+scraperwiki.sqlite.execute("create table data (TWITTERAC string, DATE string, FCOUNT int)")
 
-conn.execute('''CREATE TABLE data
-       (TWITTERAC   TEXT    NOT NULL,
-       DATE           TEXT    NOT NULL,
-       FCOUNT         INT     NOT NULL
-      );''')
-print "Table created successfully";
 
 for inner_l in list_of_lists:
     lp_count = 0
@@ -37,18 +28,12 @@ for inner_l in list_of_lists:
             #if there are some followers write out the date, ac, and follwers to the DB
             if tw_followers <> 0:
                 twitter_ac = header[lp_count]
-                print twitter_ac
-                query="""INSERT INTO DATA (TWITTERAC, DATE, FCOUNT) VALUES (?, ?, ?) """
-                write_data = [twitter_ac, twdate, tw_followers]
-                #print "Date: ", twdate, ", Ac: ", twitter_ac , " & Followers: ", tw_followers
-                conn.execute(query, write_data)    
-                conn.commit()
+                #print twitter_ac
+                scraperwiki.sqlite.execute("insert into data values (?,?,?)", (twitter_ac,twdate,tw_followers)) 
+                scraperwiki.sqlite.commit()
   
         
         lp_count =lp_count +1
         #print "end of list"
 
-
-#close the database
-conn.close()
 print "Ended"
