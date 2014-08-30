@@ -1,6 +1,13 @@
 #!/usr/bin/python
+import re
+from lxml import html
+import requests
+import scraperwiki
 
-#this script sets up the DB, reads in existing followers, writes values to the database, and closes it down
+
+# this section sets up the DB, reads in existing followers, writes values to the database, and closes it down
+# it needs to be uncommented to set up then commented out again before having the live scraper run
+
 
 #import sqlite3
 import scraperwiki
@@ -13,7 +20,7 @@ list_of_lists = [[20090701,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0],[20090801,1,
 
 #Open the database
 scraperwiki.sqlite.execute("drop table if exists data")
-scraperwiki.sqlite.execute("create table data (TWITTERAC string, DATE string, FCOUNT int)")
+scraperwiki.sqlite.execute("create table data (DATE string, TWITTERAC string, FCOUNT int)")
 
 
 for inner_l in list_of_lists:
@@ -29,7 +36,7 @@ for inner_l in list_of_lists:
             if tw_followers <> 0:
                 twitter_ac = header[lp_count]
                 #print twitter_ac
-                scraperwiki.sqlite.execute("insert into data values (?,?,?)", (twitter_ac,twdate,tw_followers)) 
+                scraperwiki.sqlite.execute("insert into data values (?,?,?)", (twdate, twitter_ac,tw_followers)) 
                 scraperwiki.sqlite.commit()
   
         
@@ -37,3 +44,6 @@ for inner_l in list_of_lists:
         #print "end of list"
 
 print "Ended"
+
+
+
