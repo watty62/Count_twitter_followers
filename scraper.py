@@ -3,6 +3,9 @@
 #this script sets up the DB, reads in existing followers, writes values to the database, and closes it down
 
 import sqlite3
+import scraperwiki
+
+print scraperwiki.sqlite.show_tables() 
 
 header =['Date','ACC_Business','DanceAberdeen','Aberdeencc','mjs_abc','EventsAberdeen','AbdnArtMuseums','AberdeenCSP','LordProvostAbdn','Acc_Jobs','NESPF','AbdnArchives','AberdeenILV','AberdeenLDP','TSAPAberdeen','Seventeen_AB','ACSEF_NESTRANS','AbLearnFest','abernet','SilverCityLibs','OCEACC']
 list_of_lists = [[20090701,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0],[20090801,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], [20090901,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[20091001,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[20091101,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[20091201,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[20100101,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[20100201,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[20100301,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[20100401,0,0,52,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[20100501,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[20100601,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
