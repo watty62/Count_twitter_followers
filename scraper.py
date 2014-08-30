@@ -15,6 +15,10 @@ import datetime
 #import sqlite3
 import scraperwiki
 
+# NB the list below (header) is different from the list in Section B, below, as 'header' contains former accounts 
+# that we operated but which are now closed. These are kept here as we are pulling in all historic data prior to 
+#capturing current monthly data in section B using only live accounts
+
 header =['Date','ACC_Business','DanceAberdeen','Aberdeencc','mjs_abc','EventsAberdeen','AbdnArtMuseums','AberdeenCSP','LordProvostAbdn','Acc_Jobs','NESPF','AbdnArchives','AberdeenILV','AberdeenLDP','TSAPAberdeen','Seventeen_AB','ACSEF_NESTRANS','AbLearnFest','abernet','SilverCityLibs','OCEACC']
 list_of_lists = [[20090701,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0],[20090801,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], [20090901,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[20091001,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[20091101,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[20091201,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[20100101,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[20100201,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[20100301,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[20100401,0,0,52,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[20100501,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[20100601,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
 [20100701,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[20100801,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[20100901,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[20101001,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[20101101,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[20101201,0,0,554,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -90,20 +94,26 @@ def get_date_str():
 
 	return str_date
 
+# The main routine starts here by checking the day of the month. 
+# Only if it is does it execute the main code. This ensure that we only grab the number of followers at the start of each month 
+# whcih matches with historic data
+
 n = datetime.datetime.now()
  
 #check that it is the 1st of the month
-if n.day == 30:
+if n.day == 1:
 	#get a full date string formatted YYYYMMDD
 	twdate = get_date_str()
 	#Loop through all the active twitter accounts we want to monitor, forming full URLS and pass them to the getFollowers function
 	for twitter_ac in twitterAccounts:
 	    twURL = 'http://twitter.com/' + twitter_ac
-	    #test print those for now - then change to SQL writes
-	    print twdate + ": " + twitter_ac + ": " +  str(getFollower(twURL))
-	    #scraperwiki.sqlite.execute("insert into data values (?,?,?)", (twitter_ac,twdate,tw_followers)) 
-            #scraperwiki.sqlite.commit()
+	    #write the data to the DB
+	    #when testing uncomment the print line below, and comment out the two scraperwikik statements below it
+	    #print twdate + ": " + twitter_ac + ": " +  str(getFollower(twURL))
+	    scraperwiki.sqlite.execute("insert into data values (?,?,?)", (twitter_ac,twdate,tw_followers)) 
+            scraperwiki.sqlite.commit()
 else:
+	# if we run this any other day but the 1st it won't do anything
 	print "Not today"	
 ########################################################
 # End Section B
