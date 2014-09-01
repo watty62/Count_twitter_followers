@@ -108,8 +108,9 @@ if n.day == 1:
 	for twitter_ac in twitterAccounts:
 	    twURL = 'http://twitter.com/' + twitter_ac
 	    #write the data to the DB
-	    #when testing uncomment the print line below, and comment out the two scraperwikik statements below it
+	    #when testing uncomment the print line below, and comment out the three lines below it
 	    #print twdate + ": " + twitter_ac + ": " +  str(getFollower(twURL))
+	    tw_followers = str(getFollower(twURL))
 	    scraperwiki.sqlite.execute("insert into data values (?,?,?)", (twitter_ac,twdate,tw_followers)) 
             scraperwiki.sqlite.commit()
 else:
