@@ -6,7 +6,7 @@ import scraperwiki
 import datetime
 
 
-'''
+
 # Begin Section A
 # this section sets up the DB, reads in existing followers, writes values to the database
 # it needs to be uncommented to set up then commented out again before having the live scraper run
@@ -119,3 +119,4 @@ else:
 ########################################################
 # End Section B
 ########################################################
+'''
