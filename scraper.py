@@ -6,7 +6,6 @@ import scraperwiki
 import datetime
 
 
-'''
 # Begin Section A
 # this section sets up the DB, reads in existing followers, writes values to the database
 # it needs to be uncommented to set up then commented out again before having the live scraper run
@@ -111,6 +110,7 @@ if n.day == 1:
 	    #when testing uncomment the print line below, and comment out the three lines below it
 	    #print twdate + ": " + twitter_ac + ": " +  str(getFollower(twURL))
 	    tw_followers = str(getFollower(twURL))
+	    tw_followers = tw_followers.replace(',', '')
 	    scraperwiki.sqlite.execute("insert into data values (?,?,?)", (twdate, twitter_ac, tw_followers)) 
             scraperwiki.sqlite.commit()
 else:
@@ -119,4 +119,4 @@ else:
 ########################################################
 # End Section B
 ########################################################
-
+'''
