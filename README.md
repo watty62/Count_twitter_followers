@@ -1,4 +1,4 @@
-This is a scraper that runs on [Morph](https://morph.io). To get started [see the documentation](https://morph.io/documentation)
+This is a scraper that runs on [Morph](https://morph.io). To get started [see the documentation](https://morph.io/documentation).
 
 The purpose of this scraper is to scrape the number of followers we have for a number of our corporate accounts and store these in a database table. 
 
