@@ -16,8 +16,10 @@ Then it processes a list of twitter account names, constructing full URLs and sc
 
 Once it has the number of followers per account it writes these off to the database.
 
-As I write this (30/08/14 - or 20140830 as the script would call it!) the code hasn't executed for real - although it has all been tested in chunks.
+When I wrote this (30/08/14 - or 20140830 as the script would call it!) the code hadn't executed for real - although it has all been tested in chunks.
 
-I'll watch nervously on 1st Sept to see if it works as planned!
+Since then it ran as planned in Sept and Oct 2014!
+
+It subsequently failed in November. I traced it to a Twitter account having being closed down. The result was that there was no valid page available for checking followers. So better error trapping would be good - someday!
 
 If you have any questions you can contact me on Twitter: [@watty62](http://twitter.com/watty62)
