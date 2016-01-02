@@ -64,7 +64,7 @@ print "Ended"
 # to the 'data' table in the database
 
 #remove DanceAberdeen
-twitterAccounts = ['Aberdeencc','mjs_abc','AbdnArtMuseums','AberdeenCSP','LordProvostAbdn','Acc_Jobs','NESPF','AbdnArchives','AberdeenILV','CC_Abdn','AberdeenLDP','TSAPAberdeen','Seventeen_AB','ACSEF_NESTRANS','AbLearnFest','abernet','SilverCityLibs','OCEACC']
+twitterAccounts = ['Aberdeencc','mjs_abc','AbdnArtMuseums','AberdeenCSP','LordProvostAbdn','Acc_Jobs','NESPF','AbdnArchives','AberdeenILV','CC_Abdn','AberdeenLDP','TSAPAberdeen','Seventeen_AB','Nestrans','AbLearnFest','abernet','SilverCityLibs','OCEACC']
 
 #locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
 
