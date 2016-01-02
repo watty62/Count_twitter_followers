@@ -102,7 +102,7 @@ def get_date_str():
 n = datetime.datetime.now()
  
 #check that it is the 1st of the month
-if n.day == 2:
+if n.day == 1:
 	#get a full date string formatted YYYYMMDD
 	twdate = get_date_str()
 	#Loop through all the active twitter accounts we want to monitor, forming full URLS and pass them to the getFollowers function
