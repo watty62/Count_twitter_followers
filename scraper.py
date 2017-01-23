@@ -65,7 +65,7 @@ print "Ended"
 # to the 'data' table in the database
 
 #remove DanceAberdeen
-twitterAccounts = ['Aberdeencc','mjs_abc','AbdnArtMuseums','AberdeenCSP','LordProvostAbdn','Acc_Jobs','NESPF','AbdnArchives','AberdeenILV','CC_Abdn','AberdeenLDP','TSAPAberdeen','Seventeen_AB','Nestrans','AbLearnFest','abernet','SilverCityLibs','OCEACC']
+twitterAccounts = ['Aberdeencc','mjs_abc','AbdnArtMuseums','LordProvostAbdn','Acc_Jobs','NESPF','AbdnArchives','CC_Abdn','AberdeenLDP','TSAPAberdeen','Seventeen_AB','Nestrans','AbLearnFest','abernet','SilverCityLibs','OCEACC']
 
 #locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
 
@@ -102,7 +102,7 @@ def get_date_str():
 n = datetime.datetime.now()
  
 #check that it is the 1st of the month
-if n.day == 1:
+if n.day == 23:
 	#get a full date string formatted YYYYMMDD
 	twdate = get_date_str()
 	#Loop through all the active twitter accounts we want to monitor, forming full URLS and pass them to the getFollowers function
@@ -110,10 +110,10 @@ if n.day == 1:
 	    twURL = 'http://twitter.com/' + twitter_ac
 	    #write the data to the DB
 	    #when testing uncomment the print line below, and comment out the three lines below it
-	    #print twdate + ": " + twitter_ac + ": " +  str(getFollower(twURL))
-	    tw_followers = str(getFollower(twURL))
-	    tw_followers = tw_followers.replace(',', '')
-	    scraperwiki.sqlite.execute("insert into data values (?,?,?)", (twdate, twitter_ac, tw_followers)) 
+	    print twdate + ": " + twitter_ac + ": " +  str(getFollower(twURL))
+	    #tw_followers = str(getFollower(twURL))
+	    #tw_followers = tw_followers.replace(',', '')
+	    #scraperwiki.sqlite.execute("insert into data values (?,?,?)", (twdate, twitter_ac, tw_followers)) 
             scraperwiki.sqlite.commit()
 else:
 	# if we run this any other day but the 1st it won't do anything
