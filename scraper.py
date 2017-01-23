@@ -110,10 +110,10 @@ if n.day == 23:
 	    twURL = 'http://twitter.com/' + twitter_ac
 	    #write the data to the DB
 	    #when testing uncomment the print line below, and comment out the three lines below it
-	    print twdate + ": " + twitter_ac + ": " +  str(getFollower(twURL))
-	    #tw_followers = str(getFollower(twURL))
-	    #tw_followers = tw_followers.replace(',', '')
-	    #scraperwiki.sqlite.execute("insert into data values (?,?,?)", (twdate, twitter_ac, tw_followers)) 
+	    #print twdate + ": " + twitter_ac + ": " +  str(getFollower(twURL))
+	    tw_followers = str(getFollower(twURL))
+	    tw_followers = tw_followers.replace(',', '')
+	    scraperwiki.sqlite.execute("insert into data values (?,?,?)", (twdate, twitter_ac, tw_followers)) 
             scraperwiki.sqlite.commit()
 else:
 	# if we run this any other day but the 1st it won't do anything
